@@ -21,12 +21,10 @@ grammar LDAP::Search::Grammar {
     token filtertype:sym<approx>  {'~='}
     token filtertype:sym<greater> {'>='}
     token filtertype:sym<less>    {'<='}
-    rule item:sym<present>        { <attr> '=*' }
-    rule item:sym<substring>      { <attr> '=' <initial>? <any> }
+    rule item:sym<substring>      { <attr> '=' <any> }
     rule item:sym<extensible>     { <attr> <dnattrs>? <matchingrule>? ':=' <value>
-				  | <dnattrs>? <matchingrule> ':=' <avalue> }
-    rule initial                  { <value> }
-    token any                      { ['*' | <value>]+ }
+				  | <dnattrs>? <matchingrule> ':=' <value> }
+    token any                     { ['*' | <value>]+ }
     rule attr                     { <oid> <attr-opts>* }
     rule attr-opts                { ';' <key-char>+}
     token key-char                { <alnum> | '-' }
@@ -35,6 +33,6 @@ grammar LDAP::Search::Grammar {
     token oid                     { ['.'|<digit>]+ | <alpha>+}
     rule value                    { [<normal>|<escaped>]+ }
     token normal                  { <- [ \x00 '(' ')' '*' \\ ]>  }
-    token escaped                 { \\ <hexdigit> <hexdigit> }
+    token escaped                 { \\ <xdigit> <xdigit> }
 }
 
