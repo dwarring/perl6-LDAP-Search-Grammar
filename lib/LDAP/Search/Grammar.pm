@@ -32,7 +32,7 @@ grammar LDAP::Search::Grammar {
     rule matchingrule             { ':'<!before '='> <oid> }
     token oid                     { ['.'|<digit>]+ | <alpha>+}
     rule value                    { [<normal>|<escaped>]+ }
-    token normal                  { <- [ \x00 '(' ')' '*' \\ ]>  }
+    token normal                  { <- [ \x00 \( \) \* \\ ]>  }
     token escaped                 { \\ <xdigit> <xdigit> }
 }
 
