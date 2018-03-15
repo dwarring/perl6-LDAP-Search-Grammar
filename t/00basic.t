@@ -19,15 +19,14 @@ for (
     TOP => '(o=univ*of*mich*)',
     TOP => '(cn:1.2.3.4.5:=Fred Flintstone)',
     escaped => '\2A',
-    value => '*\2A',
+    any => '*\2A',
     TOP => '(cn=*\2A*)',
     TOP => '(filename=C:\5cMyFile)',
     TOP => '(sn=Lu\c4\8di\c4\87)',
     ) {
     my $rule = .key;
     my $input = .value;
-    say "$rule:"~ $input.comb;
-    say LDAP::Search::Grammar.parse($input, :rule($rule) );
+    ok LDAP::Search::Grammar.parse($input, :rule($rule)), "parse $rule: $input";
 }
 
-done;
+done-testing;
